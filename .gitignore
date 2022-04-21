@@ -38,3 +38,7 @@
 # Ignore IDE files
 
 /.idea
+
+# Ignore secret foles
+
+.env
