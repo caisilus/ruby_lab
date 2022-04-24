@@ -1,0 +1,11 @@
+<h1>
+  Курс "Парадигмы и технологии программирования: основы Ruby"
+</h1>
+<nav>
+  <%= content_tag :div, class: "topnav", data: { controller: "navbar",
+                                                 names: "Описание курса|Лабораторные",
+                                                 "navbar-navname-value": nav_name } do %>
+    <%= nav_link 'Описание курса', course_url %>
+    <%= nav_link 'Лабораторные', labs_url %>
+  <% end %>
+</nav>
