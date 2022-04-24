@@ -1,0 +1,14 @@
+<h4>
+  <%= title %>
+</h4>
+<p>
+  <%= text %>
+</p>
+<div class="result_info">
+  <p>Пройдено тестов: <%= "#{percentage.round(2)}%" %></p>
+  <% if percentage == 100 %>
+    <p class="task_passed">Задание пройдено!</p>
+  <% else %>
+    <p class="task_failed">Задание не пройдено.</p>
+  <% end %>
+</div>

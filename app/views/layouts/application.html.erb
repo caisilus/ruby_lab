@@ -14,6 +14,9 @@
     <header id="header" data-turbo-permanent>
       <%= render partial: 'shared/navbar', locals: { nav_name: yield(:nav_name) } %>
     </header>
-    <%= yield %>
+    <%= yield :sidebar if content_for?(:sidebar) %>
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

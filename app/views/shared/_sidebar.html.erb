@@ -1,0 +1,10 @@
+<h4>Модули курса</h4>
+<% @sidebar_groups.each do |group| %>
+  <%= button_tag(group.name, class: "collapsible",
+                 data: { controller: "collapsible", action: "click->collapsible#collapse" }) %>
+  <div class="group_content content_hidden">
+    <% group.labs.each do |lab| %>
+      <%= link_to lab.title, lab_url(lab), class: "lab_card", data: { "turbo-frame": "lab" }%>
+    <% end %>
+  </div>
+<% end %>

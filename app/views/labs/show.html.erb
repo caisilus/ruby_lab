@@ -1,0 +1,11 @@
+<% provide :nav_name, "Лабораторные" %>
+
+<turbo-frame id="lab" data-turbo-action="advance" class="lab">
+  <%= render partial: @content %>
+  <div>
+    <h3>Задания</h3>
+    <% @tasks.each do |task| %>
+      <%= task_template 'task/default', task %>
+    <% end %>
+  </div>
+</turbo-frame>
