@@ -179,6 +179,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (4.6.0)
     regexp_parser (2.3.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -239,6 +240,7 @@ DEPENDENCIES
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.2, >= 7.0.2.3)
+  redis (~> 4.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
@@ -248,7 +250,7 @@ DEPENDENCIES
   webdrivers
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 3.0.3p157
 
 BUNDLED WITH
-   2.2.20
+   2.2.32
