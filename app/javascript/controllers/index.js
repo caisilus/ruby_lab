@@ -9,3 +9,6 @@ application.register("expandable", ExpandableController)
 
 import HelloController from "./hello_controller.js"
 application.register("hello", HelloController)
+
+import SidebarAnimationController from "./sidebar_animation_controller.js"
+application.register("sidebar-animation", SidebarAnimationController)

@@ -5,7 +5,6 @@ export default class extends Controller {
 
     initialize() {
         this.isShown = false
-        this.expandableListTarget.style.display = "none"
     }
 
     toggle() {
@@ -17,9 +16,9 @@ export default class extends Controller {
         this.collapsedIconTarget.classList.toggle("block")
 
         if (this.isShown)
-            this.expandableListTarget.style.display = "none"
+            this.expandableListTarget.classList.add("hidden")
         else
-            this.expandableListTarget.style.display = "block"
+            this.expandableListTarget.classList.remove("hidden")
         this.isShown = !this.isShown
     }
 }
