@@ -1,5 +1,5 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
-<nav class="bg-white shadow" data-controller="mobile-menu">
+<nav class="bg-white shadow" data-controller="expandable">
   <!-- add max-w-7xl to class and change mx-0 to mx-auto if you want more compact navbar-->
   <div class="mx-0 px-2 sm:px-6 lg:px-8">
     <div class="relative flex justify-between h-16">
@@ -7,7 +7,7 @@
         <!-- Mobile menu button -->
         <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 aria-controls="mobile-menu" aria-expanded="false"
-                data-action="mobile-menu#toggle">
+                data-action="expandable#toggle">
           <span class="sr-only">Open main menu</span>
           <!--
             Icon when menu is closed.
@@ -18,7 +18,7 @@
           -->
           <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                stroke="currentColor" aria-hidden="true"
-               data-mobile-menu-target="menuIcon">
+               data-expandable-target="collapsedIcon">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
           <!--
@@ -30,7 +30,7 @@
           -->
           <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                stroke="currentColor" aria-hidden="true"
-               data-mobile-menu-target="xIcon">
+               data-expandable-target="expandedIcon">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -59,7 +59,7 @@
   </div>
 
   <!-- Mobile menu, show/hide based on menu state. -->
-  <div class="sm:hidden" id="mobile-menu" data-mobile-menu-target="menuList">
+  <div class="sm:hidden" id="mobile-menu" data-expandable-target="expandableList">
     <div class="pt-2 pb-4 space-y-1">
       <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
       <%= mobile_nav_link "Описание курса", course_url, nav_name %>

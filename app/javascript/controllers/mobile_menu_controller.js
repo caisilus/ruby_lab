@@ -9,8 +9,6 @@ export default class extends Controller {
     }
 
     toggle() {
-        console.log("toggle")
-
         this.menuIconTarget.classList.toggle("hidden")
         this.menuIconTarget.classList.toggle("block")
 
