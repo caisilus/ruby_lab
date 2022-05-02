@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <div class="hidden sm:block flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
+      <div class="hidden sm:block min-h-screen flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
         <nav class="flex-1 px-2 space-y-1 bg-white" aria-label="Sidebar">
           <%= render 'shared/sidebar' %>
         </nav>
@@ -97,7 +97,7 @@
     </aside>
   </div>
 
-  <main class="overflow-y-auto sm:mt-16 py-4 px-6 sm:ml-64">
+  <main class="overflow-y-auto sm:mt-16 py-6 px-8 sm:ml-64">
     <%= yield %>
   </main>
 <% end %>

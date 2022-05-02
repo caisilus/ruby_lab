@@ -6,6 +6,7 @@ class LabsController < SidebarPagesController
 
   def show
     lab = Lab.find_by_id(params[:id])
+    @title = lab.title
     @content = lab_content(lab.content_path)
     @tasks = lab.tasks
     return not_found if @content.nil?

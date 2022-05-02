@@ -1,9 +1,10 @@
 <% provide :nav_name, "Лабораторные" %>
 
 <turbo-frame id="lab" data-turbo-action="advance" class="lab">
+  <%= content_tag :h1, @title, class: "text-2xl font-bold text-gray-700" %>
   <%= render partial: @content %>
-  <div>
-    <h3>Задания</h3>
+  <div class="flex flex-col">
+    <div class="self-center text-xl font-semibold text-gray-700 my-2">Задания</div>
     <% @tasks.each do |task| %>
       <%= task_template 'task/default', task %>
     <% end %>

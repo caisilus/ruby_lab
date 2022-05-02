@@ -13,10 +13,10 @@ end
 
 unless Lab.any?
   group = Group.find_by(name: "Основы ruby")
-  group.labs.create(title: "Лабораторная №1", content_path: "lab1")
-  group.labs.create(title: "Лабораторная №2", group: group, content_path: "lab2")
+  group.labs.create(title: "Лабораторная работа №1", content_path: "lab1")
+  group.labs.create(title: "Лабораторная работа №2", group: group, content_path: "lab2")
   group = Group.find_by(name: "Ruby on Rails")
-  group.labs.create(title: "Лабораторная №3", group: group, content_path: "lab3")
+  group.labs.create(title: "Лабораторная работа №3", group: group, content_path: "lab3")
 end
 
 unless Task.any?
