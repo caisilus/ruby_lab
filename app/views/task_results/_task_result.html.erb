@@ -1,14 +1,14 @@
 <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
   <dt class="text-sm font-medium text-gray-500 truncate">
-    <% if percentage == 100 %>
+    <% if task_result.passed_tests == task_result.total_tests %>
       Задание пройдено!
       <dd class="mt-1 text-2xl font-semibold text-green-600">
-        <%= "#{percentage}% тестов пройдено" %>
+        <%= "#{task_result&.passed_percentage&.round(2).nil? ? 0 : task_result&.passed_percentage&.round(2)}% тестов пройдено" %>
       </dd>
     <% else %>
       Попробуйте ещё...
       <dd class="mt-1 text-2xl font-semibold text-red-600">
-        <%= "#{percentage}% тестов пройдено" %>
+        <%= "#{task_result&.passed_percentage&.round(2).nil? ? 0 : task_result&.passed_percentage&.round(2)}% тестов пройдено" %>
       </dd>
     <% end %>
   </dt>
