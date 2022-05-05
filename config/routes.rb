@@ -25,4 +25,10 @@ Rails.application.routes.draw do
 
   # results
   get '/results', to: 'results#index'
+
+  # ------------ Github routes -----------
+  get '/repository/new', to: "repository#new"
+  post '/repository', to: "repository#create"
+  post 'webhook/payload', to: "payload#create"
+
 end
