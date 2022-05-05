@@ -75,3 +75,5 @@ group :test do
 end
 
 gem "dotenv-rails", "~> 2.7", :groups => [:development, :test]
+
+gem "octokit", "~> 4.22"
