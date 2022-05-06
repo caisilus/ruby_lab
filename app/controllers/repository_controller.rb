@@ -11,7 +11,7 @@ class RepositoryController < ApplicationController
   end
 
   def subscribe_to_repo(link)
-    client = Octokit::Client.new access_token: ENV['GITHUB_TOKEN']
+    client = Octokit::Client.new access_token: session[:github_access_token]
     client.subscribe("#{link}/events/push", ENV['DEV_URL'] + webhook_payload_path)
   end
 end
