@@ -1,4 +1,9 @@
-<%= form_with url: repository_url, class: "flex space-x-4" do |form| %>
-  <%= form.text_field :link, class: "w-3/5 px-2 text-lg" %>
-  <%= form.submit "Send link", class: "ml-1 p-2 bg-gray-500 text-white rounded-sm" %>
+<div class="text-lg">
+  <p> Вставьте полную ссылку на ваш репозиторий на github(начиная с https://)</p>
+  <p> Все лабораторные работы в дальнейшем выполняйте в этом репозитории.</p>
+  <p> Когда вы делаете push в репозиторий, система автоматического тестирования проверит ваш код и отобразит результат на странице лабораторной </p>
+</div>
+<%= form_with url: repository_url, class: "flex mt-4" do |form| %>
+  <%= form.text_field :link, class: "w-3/5 px-2 text-lg rounded-sm" %>
+  <%= form.submit "Отправить", class: "ml-2 p-2 bg-blue-700 hover:bg-blue-800 text-white rounded-sm" %>
 <% end %>
