@@ -7,11 +7,13 @@ class RepositoryController < ApplicationController
 
     subscribe_to_repo link
 
-    redirect_to repository_new_url
+    redirect_to labs_url
   end
+
+  private
 
   def subscribe_to_repo(link)
     client = Octokit::Client.new access_token: session[:github_access_token]
-    client.subscribe("#{link}/events/push", ENV['DEV_URL'] + webhook_payload_path)
+    client.subscribe("#{link}/events/push", ENV['DEV_URL'] + payload_path)
   end
 end

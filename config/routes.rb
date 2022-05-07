@@ -31,6 +31,6 @@ Rails.application.routes.draw do
   get '/auth/github/callback', to: "github_auth#callback"
   get '/repository/new', to: "repository#new"
   post '/repository', to: "repository#create"
-  post '/webhook/payload', to: "payload#create"
+  post '/payload', to: "payload#create"
 
 end
