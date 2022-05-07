@@ -42,3 +42,6 @@
 # Ignore secret foles
 
 .env
+
+# Ignore test sandbox
+/test_sandbox
