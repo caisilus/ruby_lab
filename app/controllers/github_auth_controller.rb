@@ -1,4 +1,3 @@
-require 'rest-client'
 require 'octokit'
 
 class GithubAuthController < ApplicationController
