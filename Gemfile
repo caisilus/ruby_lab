@@ -77,3 +77,5 @@ end
 gem "dotenv-rails", "~> 2.7", :groups => [:development, :test]
 
 gem "octokit", "~> 4.22"
+
+gem "minitest-reporters-json_reporter", "~> 0.1.1"

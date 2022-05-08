@@ -7,7 +7,7 @@ class PayloadController < ApplicationController
     folder_path = File.join(base_folder, parsed_params["owner"]["name"].to_s)
     tests_folder = File.join(base_folder, "tests")
     repo = parsed_params["full_name"].to_s
-    RunTestsJob.perform_later(repo, folder_path, tests_folder)
+    RunTestsJob.perform_later(repo, folder_path, tests_folder, 'complex_test.rb', 'complex.rb')
   end
 
   private
