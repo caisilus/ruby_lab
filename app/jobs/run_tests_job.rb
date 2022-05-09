@@ -5,6 +5,7 @@ class RunTestsJob < ApplicationJob
   queue_as :default
 
   def perform(repo, user_folder, tests_folder, test_file, *filenames)
+    puts user_folder
     prepare_directory user_folder
 
     filenames.each do |filename|
@@ -16,7 +17,7 @@ class RunTestsJob < ApplicationJob
     user_tests_folder = copy_tests tests_folder, user_folder
 
     gem_file_path = File.join(Dir.home, ENV['SANDBOX_FOLDER'], 'Gemfile')
-    run_test_file File.join(user_tests_folder, test_file), gem_file_path=gem_file_path
+    results = run_test_file File.join(user_tests_folder, test_file), gem_file_path=gem_file_path
   end
 
   private
@@ -45,14 +46,12 @@ class RunTestsJob < ApplicationJob
   # returns json with fields total, failed, errored, skipped, passed
   def run_test_file(test_file, gem_file_path='', sandbox_user: nil)
     if sandbox_user
-      res = system("sudo -u #{sandbox_user} bundle exec ruby #{test_file}")
+      res = `sudo -u #{sandbox_user} bundle exec ruby #{test_file}"`
     else
-      system("bundle exec ruby #{test_file}")
-      res = gets
+      res = `bundle exec ruby #{test_file}`
     end
 
     res = JSON.parse res
-    puts res[:statistics]
-    res[:statistics]
+    res["statistics"]
   end
 end

@@ -3,6 +3,7 @@ class PayloadController < ApplicationController
 
   def create
     parsed_params = parse_params
+    return if parsed_params.nil?
     base_folder = File.join(Dir.home, ENV['SANDBOX_FOLDER'])
     folder_path = File.join(base_folder, parsed_params["owner"]["name"].to_s)
     tests_folder = File.join(base_folder, "tests")
@@ -13,6 +14,7 @@ class PayloadController < ApplicationController
   private
 
   def parse_params
+    puts params
     json = JSON.parse params.require(:payload)
     json["repository"]
   end
