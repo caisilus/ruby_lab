@@ -8,7 +8,8 @@ class LabsController < SidebarPagesController
     lab = Lab.find_by_id(params[:id])
     @title = lab.title
     @content = lab_content(lab.content_path)
-    @tasks = lab.tasks
+    @tasks = lab.tasks.order(:created_at)
+
     return not_found if @content.nil?
   end
 
