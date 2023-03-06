@@ -65,9 +65,10 @@ class RunTestsJob < ApplicationJob
   end
 
   # returns json with fields total, failed, errored, skipped, passed
-  def run_test_file(test_file, gem_file_path='', sandbox_user: nil)
+  def run_test_file(test_file, sandbox_user: nil)
     if sandbox_user
-      res = `sudo -u #{sandbox_user} bundle exec ruby #{test_file}"`
+      #res = `sudo -u #{sandbox_user} bundle exec ruby #{test_file}"`
+      res, _status = Open3.capture2('subo', '-u', sandbox_user, 'bundle', 'exec', 'ruby', test_file)
     else
       # res = `bundle exec ruby #{test_file}`
       res, _status = Open3.capture2('bundle', 'exec', 'ruby', test_file)
