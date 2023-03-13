@@ -20,29 +20,52 @@ To be able to contribute to the app, follow this steps:
 2) Install required **ruby version** (3.2.1)
 3) Install gem bundler
 4) Install **redis**: https://redis.io/docs/getting-started/installation/
-5) Install node js and yarn
-6) Run
+5) Install **ngrok**: https://ngrok.com/download
+6) Install node js and yarn
+7) Run
 
 
     bundle install
-7) Run
+8) Run
 
     
     yarn install
-8) Install postgresql
-9) Create .env file and enter your db cridentials like that:
+9) Install postgresql
+10) Create .env file and enter your db cridentials like that:
 
 
     DATABASE_USERNAME=USERNAME
     DATABASE_PASSWORD=PASSWORD
-
-
-10) Create and migrate database. Run
+11) Create and migrate database. Run
 
 
     bundle exec rake db:create
     bundle exec rake db:migrate
-11) To have example data, run
+12) To have example data, run
 
 
     bundle exec rake db:seed
+
+## Before starting server
+
+1) Run foreman start to have life-reload for js and css
+
+
+    foreman start -f Procefile.dev
+
+2) Start redis service.
+
+
+    sudo service redis-server start
+
+On Windows it will work via WSL.
+
+3) Start ngrok server
+
+
+    ngrok http 3000
+4) Set **DEV_URL** env variable to the url **ngrok** provides.
+5) Run server
+
+
+    rails s
