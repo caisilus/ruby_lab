@@ -69,3 +69,15 @@ On Windows it will work via WSL.
 
 
     rails s
+
+### Latest feature:
+
+Instead of making steps 3-5, you can now create ngrok.yml configuration file in `lib/tasks` like this:
+    
+    version: "2"
+    console_ui: false
+    authtoken: <your auth token>
+
+When you have this file, you can run **both ngrok and server** using rake task:
+    
+    rails ngrok:start
