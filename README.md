@@ -65,7 +65,11 @@ On Windows it will work via WSL.
 
     ngrok http 3000
 4) Set **DEV_URL** env variable to the url **ngrok** provides.
-5) Run server
+5) Create folder for testing user's code and set **SANDBOX_FOLDER** env variable to its path
+6) Create tests folder in SANDBOX_FOLDER and add test files
+7) Create github app and set **GITHUB_CLIENT_ID** and **GITHUB_CLIENT_SECRET** env variables
+8) Edit **Homepage URL** and **Authorization callback URL** at GitHub App's page to match your ngrok url
+9) Run server
 
 
     rails s
