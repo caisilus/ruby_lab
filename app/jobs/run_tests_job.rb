@@ -15,8 +15,8 @@ class RunTestsJob < ApplicationJob
 
     user_tests_folder = copy_tests tests_folder, user_folder
 
-    gem_file_path = File.join(Dir.home, ENV['SANDBOX_FOLDER'], 'Gemfile')
-    run_result = run_test_file(File.join(user_tests_folder, test_file), gem_file_path=gem_file_path)
+    # gem_file_path = File.join(Dir.home, ENV['SANDBOX_FOLDER'], 'Gemfile')
+    run_result = run_test_file(File.join(user_tests_folder, test_file))
 
     result.total_tests = run_result["total"]
     result.passed_tests = run_result["passed"]
@@ -68,7 +68,7 @@ class RunTestsJob < ApplicationJob
   def run_test_file(test_file, sandbox_user: nil)
     if sandbox_user
       #res = `sudo -u #{sandbox_user} bundle exec ruby #{test_file}"`
-      res, _status = Open3.capture2('subo', '-u', sandbox_user, 'bundle', 'exec', 'ruby', test_file)
+      res, _status = Open3.capture2('sudo', '-u', sandbox_user, 'bundle', 'exec', 'ruby', test_file)
     else
       # res = `bundle exec ruby #{test_file}`
       res, _status = Open3.capture2('bundle', 'exec', 'ruby', test_file)

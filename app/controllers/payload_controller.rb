@@ -6,10 +6,12 @@ class PayloadController < ApplicationController
 
     return if parsed_params.nil?
 
-    base_folder = File.join(Dir.home, ENV['SANDBOX_FOLDER'])
+    base_folder = ENV['SANDBOX_FOLDER']
 
     folder_path = parsed_params["owner"]["login"].to_s
     folder_path = File.join(base_folder, folder_path)
+
+    Dir.mkdir folder_path unless Dir.exist? folder_path
 
     tests_folder = File.join(base_folder, "tests")
     repo = parsed_params["full_name"].to_s
