@@ -5,9 +5,9 @@
   <%= task.text %>
 </p>
 
-<%= turbo_stream_from task.last_result %>
+<%= turbo_stream_from task, :task_results %>
 
-<div id="<%= dom_id task.last_result %>">
+<div id="<%= dom_id(task, :last_result) %>">
   <%= render task.last_result %>
 </div>
 <!--%= render partial: "task_results/task_result", locals: { result: task.last_result } %-->
