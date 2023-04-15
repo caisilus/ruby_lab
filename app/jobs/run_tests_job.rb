@@ -5,18 +5,14 @@ require 'open3'
 class RunTestsJob < ApplicationJob
   queue_as :default
 
-  def perform(repo, user_folder, tests_folder, test_file, files_folder_path, result)
-    prepare_directory user_folder
+  def perform(repo, user_dir, tests_dir, test_file, files_dir, result)
+    prepare_directory user_dir
 
-    contents = get_folder_contents_list(repo, files_folder_path)
-    contents.each do |content|
-      write_decoded_content content[:content], File.join(user_folder, content[:name])
-    end
+    download_files_to_user_dir(user_dir, repo, files_dir)
 
-    user_tests_folder = copy_tests tests_folder, user_folder
+    user_tests_dir = copy_tests tests_dir, user_dir
 
-    # gem_file_path = File.join(Dir.home, ENV['SANDBOX_FOLDER'], 'Gemfile')
-    run_result = run_test_file(File.join(user_tests_folder, test_file))
+    run_result = run_test_file(File.join(user_tests_dir, test_file))
 
     result.total_tests = run_result["total"]
     result.passed_tests = run_result["passed"]
@@ -25,21 +21,26 @@ class RunTestsJob < ApplicationJob
 
   private
 
-  def get_folder_contents_list(repo, path)
-    response = Octokit.contents(repo, options = { path: path })
-    if response.is_a?(Array)
-      contents = []
-      response.each do |obj|
-        raise "No type field" unless obj.key? :type
-
-        if obj[:type] == "file"
-          obj_responce = Octokit.contents(repo, options = { path: obj[:path] })
-          contents << obj_responce
-        end
-      end
-    else
-      contents = [response]
+  def download_files_to_user_dir(user_dir, repo, files_dir)
+    contents = get_dir_contents_list(repo, files_dir)
+    contents.each do |content|
+      write_decoded_content content[:content], File.join(user_dir, content[:name])
     end
+  end
+
+  def get_dir_contents_list(repo, dir_path)
+    response = Octokit.contents(repo, options = { path: dir_path })
+
+    return [response] unless response.is_a?(Array)
+
+    contents = []
+    response.each do |content_data|
+      next unless content_data.key?(:type) && content_data[:type] == "file"
+
+      obj_responce = Octokit.contents(repo, options = { path: content_data[:path] })
+      contents << obj_responce
+    end
+
     contents
   end
 

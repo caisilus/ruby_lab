@@ -6,30 +6,29 @@ class PayloadController < ApplicationController
 
     return if parsed_params.nil?
 
-    base_folder = ENV['SANDBOX_FOLDER']
+    base_dir = ENV['SANDBOX_DIRECTORY']
 
-    folder_path = parsed_params["owner"]["login"].to_s
-    folder_path = File.join(base_folder, folder_path)
+    username = parsed_params["owner"]["login"].to_s
+    user_dir = File.join(base_dir, username)
 
-    Dir.mkdir folder_path unless Dir.exist? folder_path
+    Dir.mkdir user_dir unless Dir.exist? user_dir
 
-    tests_folder = File.join(base_folder, "tests")
+    tests_dir = File.join(base_dir, "tests")
     repo = parsed_params["full_name"].to_s
 
     labs_h = parsed_params["labs"]
-    puts labs_h
+
     labs_h.each do |lab_id, task_indices|
       lab = Lab.find(lab_id)
       task_indices.each do |index|
-        folder_path = File.join(folder_path, "lab#{lab_id}_task#{index}")
-        files_folder_path = File.join("lab#{lab_id}", "task#{index}")
+        task_dir = File.join(user_dir, "lab#{lab_id}_task#{index}")
+        files_dir_path = File.join("lab#{lab_id}", "task#{index}")
         task = lab.tasks.find_by(index_number: index)
         test_file = task.test_filename
         result = task.last_result
-        RunTestsJob.perform_later(repo, folder_path, tests_folder, test_file, files_folder_path, result)
+        RunTestsJob.perform_later(repo, task_dir, tests_dir, test_file, files_dir_path, result)
       end
     end
-    # RunTestsJob.perform_later(repo, folder_path, tests_folder, 'complex_test.rb', 'complex.rb')
   end
 
   private
@@ -39,35 +38,44 @@ class PayloadController < ApplicationController
 
     json = JSON.parse params.require(:payload)
 
+    puts json[:ref]
+
     return nil unless json.has_key?("commits")
 
-    files_set = commited_files json["commits"]
-    puts files_set
+    files_set = committed_files_set json["commits"]
 
     labs = labs_hash(files_set)
     json["repository"].merge({ "labs" => labs })
   end
 
-  def commited_files(commited)
+  def committed_files_set(commits)
     files_set = Set.new
-    commited.each do |commit_hash|
-      files_set.merge(commit_hash["added"])
-      files_set.merge(commit_hash["modified"])
+    commits.each do |commit|
+      files_set.merge(commit["added"])
+      files_set.merge(commit["modified"])
     end
     files_set
   end
 
+  # TODO: bad name
   def labs_hash(files_set)
     labs_hash = Hash.new { |hash, key| hash[key] = Array.new }
+
     files_set.each do |full_path|
-      tokens = full_path.split("/")
-
-      raise "must be at least 3 tokens in path" if tokens.length != 3
-
-      key = tokens.first.gsub("lab", "").to_i
-      value = tokens[1].gsub("task", "").to_i
-      labs_hash[key] << value
+      update_labs_hash(full_path, labs_hash)
     end
+
     labs_hash
+  end
+
+  def update_labs_hash(file_path, labs_hash)
+    tokens = file_path.split("/")
+
+    raise "must be at least 3 tokens in path" if tokens.length != 3
+
+    lab_id = tokens.first.gsub("lab", "").to_i
+    task_id = tokens[1].gsub("task", "").to_i
+
+    labs_hash[lab_id] << task_id
   end
 end
