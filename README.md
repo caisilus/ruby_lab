@@ -28,45 +28,45 @@ To be able to contribute to the app, follow this steps:
 7) Run
 
 
-    bundle install
+        bundle install
 8) Run
 
     
-    yarn install
+        yarn install
 9) Install postgresql
 10) Create .env file and enter your db cridentials like that:
 
 
-    DATABASE_USERNAME=USERNAME
-    DATABASE_PASSWORD=PASSWORD
+        DATABASE_USERNAME=<username>
+        DATABASE_PASSWORD=<password>
+    
 11) Create and migrate database. Run
 
 
-    bundle exec rake db:create
-    bundle exec rake db:migrate
+        bundle exec rake db:create
+        bundle exec rake db:migrate
+    
 12) To have example data, run
 
 
-    bundle exec rake db:seed
+        bundle exec rake db:seed
 
 ## Before starting server
 
 1) Run foreman start to have life-reload for js and css
 
 
-    foreman start -f Procefile.dev
-
+        foreman start -f Procefile.dev
 2) Start redis service.
 
 
-    sudo service redis-server start
-
+        sudo service redis-server start
 On Windows it will work via WSL.
 
 3) Start ngrok server
 
 
-    ngrok http 3000
+        ngrok http 3000  
 4) Set **DEV_URL** env variable to the url **ngrok** provides.
 5) Create folder for testing user's code and set **SANDBOX_FOLDER** env variable to its path
 6) Create tests folder in SANDBOX_FOLDER and add test files
@@ -75,7 +75,7 @@ On Windows it will work via WSL.
 9) Run server
 
 
-    rails s
+        rails s
 
 ### Latest feature:
 
