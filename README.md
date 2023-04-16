@@ -7,6 +7,7 @@ This project is in development. Not all of the features below are implemented.
 ## Github integration
 You can log-in via github and add a link to a repo: RubyLab will trace your commits and test your committed code automatically.
 
+![alt text](https://github.com/caisilus/ruby_lab_2/blob/main/app/assets/images/github_interaction_scheme.png?raw=true)
 ## Real-time updates
 There is no need to refresh the page after you push your code. Your score will be updated in real time.
 
