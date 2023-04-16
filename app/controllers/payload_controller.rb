@@ -4,30 +4,17 @@ class PayloadController < ApplicationController
   def create
     parsed_params = parse_params
 
+    puts parsed_params
+
     return if parsed_params.nil?
 
-    base_dir = ENV['SANDBOX_DIRECTORY']
+    username = parsed_params["repository"]["owner"]["login"].to_s
+    repo = parsed_params["repository"]["full_name"].to_s
 
-    username = parsed_params["owner"]["login"].to_s
-    user_dir = File.join(base_dir, username)
-
-    Dir.mkdir user_dir unless Dir.exist? user_dir
-
-    tests_dir = File.join(base_dir, "tests")
-    repo = parsed_params["full_name"].to_s
-
-    labs_h = parsed_params["labs"]
-
-    labs_h.each do |lab_id, task_indices|
-      lab = Lab.find(lab_id)
-      task_indices.each do |index|
-        task_dir = File.join(user_dir, "lab#{lab_id}_task#{index}")
-        files_dir_path = File.join("lab#{lab_id}", "task#{index}")
-        task = lab.tasks.find_by(index_number: index)
-        test_file = task.test_filename
-        result = task.last_result
-        RunTestsJob.perform_later(repo, task_dir, tests_dir, test_file, files_dir_path, result)
-      end
+    files_set = committed_files_set parsed_params["commits"]
+    tasks = tasks_list(files_set)
+    tasks.each do |task|
+      RunTestsJob.perform_later(username, repo, task)
     end
   end
 
@@ -37,15 +24,7 @@ class PayloadController < ApplicationController
     return nil unless params.has_key?(:payload)
 
     json = JSON.parse params.require(:payload)
-
-    puts json[:ref]
-
-    return nil unless json.has_key?("commits")
-
-    files_set = committed_files_set json["commits"]
-
-    labs = labs_hash(files_set)
-    json["repository"].merge({ "labs" => labs })
+    json
   end
 
   def committed_files_set(commits)
@@ -57,25 +36,25 @@ class PayloadController < ApplicationController
     files_set
   end
 
-  # TODO: bad name
-  def labs_hash(files_set)
-    labs_hash = Hash.new { |hash, key| hash[key] = Array.new }
+  def tasks_list(files_set)
+    tasks_list = []
 
     files_set.each do |full_path|
-      update_labs_hash(full_path, labs_hash)
+      task = get_task_by_filename(full_path)
+      tasks_list << task
     end
 
-    labs_hash
+    tasks_list
   end
 
-  def update_labs_hash(file_path, labs_hash)
+  def get_task_by_filename(file_path)
     tokens = file_path.split("/")
 
     raise "must be at least 3 tokens in path" if tokens.length != 3
 
     lab_id = tokens.first.gsub("lab", "").to_i
-    task_id = tokens[1].gsub("task", "").to_i
+    task_index = tokens[1].gsub("task", "").to_i
 
-    labs_hash[lab_id] << task_id
+    Lab.find(lab_id).tasks.find_by(index_number: task_index)
   end
 end
