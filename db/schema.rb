@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_10_161325) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_16_130828) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,15 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_161325) do
     t.index ["group_id"], name: "index_labs_on_group_id"
   end
 
-  create_table "labs_tasks", force: :cascade do |t|
-    t.bigint "lab_id"
-    t.bigint "task_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lab_id"], name: "index_labs_tasks_on_lab_id"
-    t.index ["task_id"], name: "index_labs_tasks_on_task_id"
-  end
-
   create_table "task_results", force: :cascade do |t|
     t.bigint "task_id"
     t.integer "passed_tests"
@@ -93,8 +84,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_10_161325) do
     t.datetime "updated_at", null: false
     t.string "test_filename"
     t.integer "index_number"
+    t.bigint "lab_id", null: false
+    t.index ["lab_id"], name: "index_tasks_on_lab_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "tasks", "labs"
 end
