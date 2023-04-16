@@ -11,6 +11,8 @@ You can log-in via github and add a link to a repo: RubyLab will trace your comm
 ## Real-time updates
 There is no need to refresh the page after you push your code. Your score will be updated in real time.
 
+![real time updates](https://github.com/caisilus/ruby_lab_2/blob/main/app/assets/images/real_time_updates.gif?raw=true)
+
 ## Gamification
 Scoring system is aimed to create motivation and determine your strengths and weaknesses.
 
