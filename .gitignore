@@ -45,3 +45,6 @@
 
 # Ignore test sandbox
 /test_sandbox
+
+# Ignore ngrok.yml config
+/lib/tasks/ngrok.yml
