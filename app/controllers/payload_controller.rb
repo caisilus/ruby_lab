@@ -4,8 +4,6 @@ class PayloadController < ApplicationController
   def create
     parsed_params = parse_params
 
-    puts parsed_params
-
     return if parsed_params.nil?
 
     username = parsed_params["repository"]["owner"]["login"].to_s
@@ -24,6 +22,9 @@ class PayloadController < ApplicationController
     return nil unless params.has_key?(:payload)
 
     json = JSON.parse params.require(:payload)
+
+    return nil unless json.has_key?("commits")
+
     json
   end
 
