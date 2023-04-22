@@ -47,7 +47,14 @@
         </div>
       </div>
 
-      <% unless @current_user.nil? %>
+      <% if @current_user.nil? %>
+        <div class="hidden sm:flex md:flex-1 md:justify-end">
+          <%= link_to @authorize_url, class: "inline-flex items-center px-1 pt-1 text-sm font-medium" do %>
+            Войти
+            <span aria-hidden="true">&rarr;</span>
+          <% end %>
+        </div>
+      <% else %>
         <%= render partial: "shared/profile_buttons", locals: { user: @current_user } %>
       <% end %>
     </div>
@@ -60,7 +67,13 @@
       <%= mobile_nav_link "Описание курса", course_url, nav_name %>
       <%= mobile_nav_link "Лабораторные", labs_url, nav_name %>
     </div>
-    <% unless @current_user.nil? %>
+    <% if @current_user.nil? %>
+      <div class="border-t border-gray-200 pb-3 pt-4">
+        <%= link_to @authorize_url, class: "block px-4 py-2 text-base font-medium text-gray-1000 hover:bg-gray-100 hover:text-gray-900" do%>
+          Войти
+        <% end %>
+      </div>
+    <% else %>
       <%= yield :mobile_profile_buttons %>
     <% end %>
   </div>
