@@ -8,7 +8,6 @@ export default class extends Controller {
     }
 
     toggle() {
-        console.log("toggle")
         this.expandedIconTarget.classList.toggle("hidden")
         this.expandedIconTarget.classList.toggle("block")
 

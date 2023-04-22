@@ -17,8 +17,6 @@ export default class extends Controller {
     }
 
     async startAnimation() {
-        console.log("toggle")
-
         if (this.isShown) {
             this.hideTransition()
 
@@ -30,6 +28,7 @@ export default class extends Controller {
             this.sidebarMenuTarget.classList.remove("hidden")
 
             await this.nextFrame()
+            // await this.timeout(this.durationValue)
 
             this.showTransition()
         }

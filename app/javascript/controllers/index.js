@@ -4,11 +4,14 @@
 
 import { application } from "./application"
 
-import ExpandableController from "./expandable_controller.js"
+import ExpandableController from "./expandable_controller"
 application.register("expandable", ExpandableController)
 
-import HelloController from "./hello_controller.js"
+import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import SidebarAnimationController from "./sidebar_animation_controller.js"
+import ProfileButtonController from "./profile_button_controller"
+application.register("profile-button", ProfileButtonController)
+
+import SidebarAnimationController from "./sidebar_animation_controller"
 application.register("sidebar-animation", SidebarAnimationController)
