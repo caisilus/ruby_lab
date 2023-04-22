@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   get '/labs', to: 'labs#index'
 
   # ------------ Github routes -----------
-  get '/auth/github/new', to: "github_auth#new"
   get '/auth/github/callback', to: "github_auth#callback"
+  delete '/auth/github', to: "github_auth#destroy"
   get '/users/new', to: "users#new"
   post '/users', to: "users#create"
   get '/repository/new', to: "repository#new"

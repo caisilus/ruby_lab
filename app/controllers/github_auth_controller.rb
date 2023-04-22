@@ -1,10 +1,6 @@
 require 'octokit'
 
 class GithubAuthController < ApplicationController
-  def new
-    @authorize_url = Octokit::Client.new.authorize_url ENV["GITHUB_CLIENT_ID"], options = { scope: "repo" }
-  end
-
   def callback
     code = params[:code]
     result = Octokit::Client.new.exchange_code_for_token(code.to_s, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'],
@@ -19,6 +15,12 @@ class GithubAuthController < ApplicationController
     return redirect_to users_new_url if user.nil?
 
     session[:current_user_id] = user.id
+    redirect_to labs_url
+  end
+
+  def destroy
+    session.delete(:github_access_token)
+    session.delete(:current_user_id)
     redirect_to labs_url
   end
 end
