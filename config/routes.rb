@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   # ------------ Github routes -----------
   get '/auth/github/new', to: "github_auth#new"
   get '/auth/github/callback', to: "github_auth#callback"
+  get '/users/new', to: "users#new"
+  post '/users', to: "users#create"
   get '/repository/new', to: "repository#new"
   post '/repository', to: "repository#create"
   post '/payload', to: "payload#create"
