@@ -47,8 +47,8 @@
         </div>
       </div>
 
-      <% unless session[:current_user].nil? %>
-        <%= render partial: "shared/profile_buttons", locals: { avatar_url: session[:current_user]["avatar_url"]} %>
+      <% unless @current_user.nil? %>
+        <%= render partial: "shared/profile_buttons", locals: { user: @current_user } %>
       <% end %>
     </div>
   </div>
@@ -60,5 +60,8 @@
       <%= mobile_nav_link "Описание курса", course_url, nav_name %>
       <%= mobile_nav_link "Лабораторные", labs_url, nav_name %>
     </div>
+    <% unless @current_user.nil? %>
+      <%= yield :mobile_profile_buttons %>
+    <% end %>
   </div>
 </nav>

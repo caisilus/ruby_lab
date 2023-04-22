@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     user.repo_link = link
     user.save
 
-    session[:current_user] = user
+    session[:current_user_id] = user.id
 
     redirect_to labs_url
   end

@@ -18,7 +18,7 @@ class GithubAuthController < ApplicationController
     session[:github_access_token] = result[:access_token]
     return redirect_to users_new_url if user.nil?
 
-    session[:current_user] = user
+    session[:current_user_id] = user.id
     redirect_to labs_url
   end
 end
