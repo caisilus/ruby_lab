@@ -13,4 +13,13 @@ class User < ApplicationRecord
   def github_profile_link
     "https://github.com/#{github_login}"
   end
+
+  def setup_user_dir
+    base_dir = ENV["SANDBOX_DIRECTORY"]
+    user_dir = File.join(base_dir, github_login)
+
+    Dir.mkdir(user_dir) unless Dir.exist?(user_dir)
+
+    user_dir
+  end
 end

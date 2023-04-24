@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
     subscribe_to_repo link
 
-    user.repo_link = link
+    user.repo_link = link.gsub("https://github.com/", "")
     user.save
 
     session[:current_user_id] = user.id

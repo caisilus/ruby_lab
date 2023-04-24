@@ -7,12 +7,15 @@ class PayloadController < ApplicationController
     return if parsed_params.nil?
 
     username = parsed_params["repository"]["owner"]["login"].to_s
+    user = User.find_by(github_login: username)
     repo = parsed_params["repository"]["full_name"].to_s
+
+    return if repo != user.repo_link
 
     files_set = committed_files_set parsed_params["commits"]
     tasks = tasks_list(files_set)
     tasks.each do |task|
-      RunTestsJob.perform_later(username, repo, task)
+      RunTestsJob.perform_later(user, task)
     end
   end
 
