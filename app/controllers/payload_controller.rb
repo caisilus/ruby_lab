@@ -10,7 +10,10 @@ class PayloadController < ApplicationController
     user = User.find_by(github_login: username)
     repo = parsed_params["repository"]["full_name"].to_s
 
-    return if repo != user.repo_link
+    if repo != user.repo_link
+      puts "#{repo} != #{user.repo_link}"
+      return
+    end
 
     files_set = committed_files_set parsed_params["commits"]
     tasks = tasks_list(files_set)

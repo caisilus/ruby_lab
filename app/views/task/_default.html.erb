@@ -8,9 +8,21 @@
 <%= turbo_stream_from task, :task_results %>
 
 <% if @current_user.nil? %>
-  <%= label_tag("Необходимо войти в аккаунт для отображения результатов лабораторных")%>
+  <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+    <dd class="mt-1 text-2xl font-semibold text-red-600">
+      <%= "Для отображения результатов необходимо войти в аккаунт"%>
+    </dd>
+  </div>
 <% else %>
   <div id="<%= last_result_dom_id(task, @current_user) %>">
-    <%= render task.last_result_for_user(@current_user) %>
+    <% if task.has_results_for_user?(@current_user) %>
+      <%= render task.last_result_for_user(@current_user) %>
+    <% else %>
+      <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+        <dd class="mt-1 text-2xl font-semibold text-red-600">
+          <%= "Не начато"%>
+        </dd>
+      </div>
+    <% end %>
   </div>
 <% end %>

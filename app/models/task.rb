@@ -5,6 +5,10 @@ class Task < ApplicationRecord
   has_many :task_results
   before_destroy { labs.clear }
 
+  def has_results_for_user?(user)
+    task_results.where(user: user).count > 0
+  end
+
   def last_result_for_user(user)
     task_results.where(user: user).last
   end
