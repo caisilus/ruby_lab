@@ -1,5 +1,6 @@
 class TaskResult < ApplicationRecord
   belongs_to :task
+  belongs_to :user
   validates  :passed_tests, :total_tests, presence: true
 
   after_create_commit :broadcast_later
