@@ -1,4 +1,5 @@
 class TaskResult < ApplicationRecord
+  include LabsHelper
   belongs_to :task
   belongs_to :user
   validates  :passed_tests, :total_tests, presence: true
@@ -10,7 +11,8 @@ class TaskResult < ApplicationRecord
   end
 
   def broadcast_later
-    broadcast_update_later_to(task, :task_results, target: "last_result_task_#{task_id}")
+    target = last_result_dom_id(task, user)
+    broadcast_update_later_to(task, :task_results, target: target)
   end
 end
 

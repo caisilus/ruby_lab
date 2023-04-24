@@ -7,7 +7,10 @@
 
 <%= turbo_stream_from task, :task_results %>
 
-<div id="<%= dom_id(task, :last_result) %>">
-  <%= render task.last_result %>
-</div>
-<!--%= render partial: "task_results/task_result", locals: { result: task.last_result } %-->
+<% if @current_user.nil? %>
+  <%= label_tag("Необходимо войти в аккаунт для отображения результатов лабораторных")%>
+<% else %>
+  <div id="<%= last_result_dom_id(task, @current_user) %>">
+    <%= render task.last_result_for_user(@current_user) %>
+  </div>
+<% end %>
