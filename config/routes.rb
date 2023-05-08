@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'course#index'
 
+  get "up", to: "rails/health#show"
+
   get '/course', to: 'course#index' # general course information
 
   # labs
