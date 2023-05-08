@@ -87,4 +87,4 @@ production:
   <<: *default
   database: ruby_lab_production
   username: ruby_lab
-  password: <%= ENV["RUBY_LAB_DATABASE_PASSWORD"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
