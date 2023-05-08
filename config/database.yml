@@ -85,6 +85,7 @@ test:
 #
 production:
   <<: *default
+  host: <%= ENV["DB_HOST"] %>
   database: ruby_lab_production
   username: ruby_lab
   password: <%= ENV["POSTGRES_PASSWORD"] %>

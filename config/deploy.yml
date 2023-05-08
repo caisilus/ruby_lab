@@ -21,8 +21,8 @@ registry:
 # Inject ENV variables into containers (secrets come from .env).
 env:
  clear:
-   SANDBOX_DIRECTORY="/"
-#   DB_HOST: 192.168.0.2
+   DB_HOST: 77.91.123.194
+   SANDBOX_DIRECTORY: "/"
  secret:
    - RAILS_MASTER_KEY
    - GITHUB_CLIENT_ID
