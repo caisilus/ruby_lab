@@ -2,7 +2,7 @@
 service: ruby_lab
 
 # Name of the container image.
-image: user/ruby_lab
+image: caisilus/ruby_lab
 
 # Deploy to these servers.
 servers:
@@ -20,7 +20,8 @@ registry:
 
 # Inject ENV variables into containers (secrets come from .env).
 env:
-# clear:
+ clear:
+   SANDBOX_DIRECTORY=/
 #   DB_HOST: 192.168.0.2
  secret:
    - RAILS_MASTER_KEY
