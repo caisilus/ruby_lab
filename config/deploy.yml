@@ -21,7 +21,7 @@ registry:
 # Inject ENV variables into containers (secrets come from .env).
 env:
  clear:
-   DB_HOST: 0.0.0.0
+   DB_HOST: ruby_lab-db
    SANDBOX_DIRECTORY: "/"
  secret:
    - RAILS_MASTER_KEY
@@ -51,7 +51,7 @@ accessories:
  db:
    image: postgres:latest
    host: 77.91.123.194
-   port: 3306
+   port: 5432
    env:
      clear:
        POSTGRES_USER: ruby_lab
