@@ -21,7 +21,7 @@ registry:
 # Inject ENV variables into containers (secrets come from .env).
 env:
  clear:
-   DB_HOST: 77.91.123.194
+   DB_HOST: 0.0.0.0
    SANDBOX_DIRECTORY: "/"
  secret:
    - RAILS_MASTER_KEY
