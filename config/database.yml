@@ -88,4 +88,5 @@ production:
   host: <%= ENV["DB_HOST"] %>
   database: ruby_lab_production
   username: ruby_lab
+  port: 3306
   password: <%= ENV["POSTGRES_PASSWORD"] %>
