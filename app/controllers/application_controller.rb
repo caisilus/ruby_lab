@@ -14,7 +14,13 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    @current_user = User.find(session[:current_user_id])
+    begin
+      @current_user = User.find(session[:current_user_id])
+    rescue ActiveRecord::RecordNotFound
+      session.delete(:current_user_id)
+      session.delete(:github_access_token)
+      @current_user = nil
+    end
   end
 
   def setup_github_auth_link
