@@ -3,6 +3,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :surname, presence: true
   validates :avatar_url, presence: true
+  has_many :task_results, dependent: :destroy
 
   def full_name
     return [surname, name].join(" ") if self.middle_name.nil?
