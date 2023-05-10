@@ -22,14 +22,19 @@ registry:
 env:
  clear:
    DB_HOST: 77.91.123.194
+   REDIS_URL: "redis://77.91.123.194:6379/1"
    RAILS_SERVE_STATIC_FILES: true
    RAILS_LOG_TO_STDOUT: true
-   SANDBOX_DIRECTORY: "/"
+   SANDBOX_DIRECTORY: "/rails/sandbox"
  secret:
    - RAILS_MASTER_KEY
    - GITHUB_CLIENT_ID
    - GITHUB_CLIENT_SECRET
    - POSTGRES_PASSWORD
+
+# Volumes for app container
+volumes:
+  - "~/ruby_lab_app/sandbox:/rails/sandbox"
 
 # Call a broadcast command on deploys.
 # audit_broadcast_cmd:
