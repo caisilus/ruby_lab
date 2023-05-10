@@ -21,7 +21,6 @@ registry:
 # Inject ENV variables into containers (secrets come from .env).
 env:
  clear:
-   DEV_URL: http://77.91.123.194
    DB_HOST: 77.91.123.194
    RAILS_SERVE_STATIC_FILES: true
    RAILS_LOG_TO_STDOUT: true

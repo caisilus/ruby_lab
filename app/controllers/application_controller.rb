@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
-  before_action :set_current_user
+  before_action :set_host_url, :set_current_user
+
+  private
+
+  def set_host_url
+    @host_url = request.protocol + request.host
+  end
 
   def set_current_user
     if session[:current_user_id].nil?
