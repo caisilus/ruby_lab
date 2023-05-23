@@ -5,7 +5,7 @@
   <%= task.text %>
 </p>
 
-<%= turbo_stream_from task, :task_results %>
+<%= turbo_stream_from last_result_dom_id(task, @current_user) %>
 
 <% if @current_user.nil? %>
   <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
