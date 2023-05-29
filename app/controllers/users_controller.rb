@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 
     parsed_params = parse_params
 
-    user = User.new
-    user.name = parsed_params[:name]
-    user.middle_name = parsed_params[:middle_name] if parsed_params.has_key? :middle_name
-    user.surname = parsed_params[:surname]
+    user = User.new parsed_params
     user.github_login = github_user[:login]
     user.avatar_url = github_user[:avatar_url]
 
@@ -29,7 +26,7 @@ class UsersController < ApplicationController
   private
 
   def parse_params
-    params.permit(:surname, :name, :middle_name, :avatar_url, :repo_link)
+    params.permit(:surname, :name, :middle_name, :repo_link)
   end
 
   def subscribe_to_repo(link)

@@ -3,6 +3,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :surname, presence: true
   validates :avatar_url, presence: true
+  validates :repo_link, presence: true
   has_many :task_results, dependent: :destroy
 
   def full_name
