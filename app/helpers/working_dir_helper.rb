@@ -19,8 +19,7 @@ module WorkingDirHelper
     response.each do |content_data|
       next unless content_data.key?(:type) && content_data[:type] == "file"
 
-      obj_responce = Octokit.contents(repo, options = { path: content_data[:path] })
-      contents << obj_responce
+      contents << Octokit.contents(repo, options = { path: content_data[:path] })
     end
 
     contents
@@ -38,16 +37,26 @@ module WorkingDirHelper
   end
 
   def copy_test_file(test_filename, destination_dir)
-    src_test_filename = File.join(tests_dir, test_filename)
+    source_test_filename = File.join(tests_dir, test_filename)
 
+    destination_test_filename = destination_test_filename(destination_dir, test_filename)
+
+    FileUtils.cp source_test_filename, destination_test_filename
+
+    destination_test_filename
+  end
+
+  def destination_test_filename(destination_dir, test_filename)
+    destination_tests_dir = prepare_destination_tests_dir(destination_dir)
+
+    File.join(destination_tests_dir, test_filename)
+  end
+
+  def prepare_destination_tests_dir(destination_dir)
     destination_tests_dir = File.join(destination_dir, "tests")
 
     Dir.mkdir destination_tests_dir unless Dir.exist? destination_tests_dir
 
-    res_test_filename = File.join(destination_tests_dir, test_filename)
-
-    FileUtils.cp src_test_filename, res_test_filename
-
-    res_test_filename
+    destination_tests_dir
   end
 end
