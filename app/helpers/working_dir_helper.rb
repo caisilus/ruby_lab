@@ -11,12 +11,17 @@ module WorkingDirHelper
   end
 
   def get_dir_contents_list(repo, dir_path)
-    response = Octokit.contents(repo, options = { path: dir_path })
+    content_entries = Octokit.contents(repo, options = { path: dir_path })
 
-    return [response] unless response.is_a?(Array)
+    # if dir_path is actually a file path, Octokit returns file content instead of content json
+    return [content_entries] unless content_entries.is_a?(Array)
 
+    get_file_contents_for_content_entries(content_entries)
+  end
+
+  def get_file_contents_for_content_entries(content_entries)
     contents = []
-    response.each do |content_data|
+    content_entries.each do |content_data|
       next unless content_data.key?(:type) && content_data[:type] == "file"
 
       contents << Octokit.contents(repo, options = { path: content_data[:path] })
