@@ -5,21 +5,35 @@ export default class extends Controller {
   static targets = ["transitionable"]
 
   initialize() {
-    this.isMenuShown = false;
+    this.entered = false;
   }
 
-  async toggleProfileMenu() {
-    if (this.isMenuShown) {
-      await leave(this.transitionableTarget);
-
-      this.transitionableTarget.classList.add("hidden");
+  async toggleTransition() {
+    if (this.entered) {
+      await this.transitionLeave();
     }
     else {
-      this.transitionableTarget.classList.remove("hidden")
-
-      await enter(this.transitionableTarget);
+      await this.transitionEnter();
     }
 
-    this.isMenuShown = !this.isMenuShown;
+    this.entered = !this.entered;
+  }
+
+  async transitionLeave() {
+    await Promise.all(this.transitionableTargets.map(transitionable => leave(transitionable)));
+
+    this.transitionableTargets.forEach(transitionable => transitionable.classList.add("hidden"));
+
+    let event = new CustomEvent("transition-left");
+    document.dispatchEvent(event);
+  }
+
+  async transitionEnter() {
+    let event = new CustomEvent("transition-enter");
+    document.dispatchEvent(event);
+
+    this.transitionableTargets.forEach(transitionable => transitionable.classList.remove("hidden"));
+
+    await Promise.all(this.transitionableTargets.map(transitionable => enter(transitionable)));
   }
 }
