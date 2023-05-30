@@ -10,8 +10,8 @@ application.register("expandable", ExpandableController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
-import ProfileButtonController from "./profile_button_controller"
-application.register("profile-button", ProfileButtonController)
+import TransitionController from "./transition_controller"
+application.register("transition", TransitionController)
 
 import SidebarAnimationController from "./sidebar_animation_controller"
 application.register("sidebar-animation", SidebarAnimationController)
