@@ -7,19 +7,19 @@
       <!-- Collapsed icon -->
       <svg class="block text-gray-300 mr-2 flex-shrink-0 h-5 w-5 transform gro up-hover:text-gray-400 transition-colors ease-in-out duration-150"
            viewBox="0 0 20 20" aria-hidden="true"
-           data-toggle-hidden-target="itemToToggle">
+           data-toggle-hidden-target="toggleable">
         <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
       </svg>
       <!-- Expanded icon -->
       <svg class="hidden text-gray-400 rotate-90 mr-2 flex-shrink-0 h-5 w-5 transform gro up-hover:text-gray-400 transition-colors ease-in-out duration-150"
            viewBox="0 0 20 20" aria-hidden="true"
-           data-toggle-hidden-target="itemToToggle">
+           data-toggle-hidden-target="toggleable">
         <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
       </svg>
       <%= group.name %>
     </button>
     <!-- Expandable link section, show/hide based on state. -->
-    <div class="hidden space-y-1" data-toggle-hidden-target="itemToToggle">
+    <div class="hidden space-y-1" data-toggle-hidden-target="toggleable">
       <ul>
         <% group.labs.each do |lab| %>
           <li>

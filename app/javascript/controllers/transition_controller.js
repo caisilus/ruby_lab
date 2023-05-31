@@ -10,30 +10,20 @@ export default class extends Controller {
 
   async toggleTransition() {
     if (this.entered) {
-      await this.transitionLeave();
+      await this.transitionAll(leave);
     }
     else {
-      await this.transitionEnter();
+      await this.transitionAll(enter);
     }
 
     this.entered = !this.entered;
   }
 
-  async transitionLeave() {
-    await Promise.all(this.transitionableTargets.map(transitionable => leave(transitionable)));
+  async transitionAll(transition) {
+    this.element.dispatchEvent(new CustomEvent(`transition-${transition.name}-start`));
 
-    this.transitionableTargets.forEach(transitionable => transitionable.classList.add("hidden"));
+    await Promise.all(this.transitionableTargets.map(transitionable => transition(transitionable)));
 
-    let event = new CustomEvent("transition-left");
-    document.dispatchEvent(event);
-  }
-
-  async transitionEnter() {
-    let event = new CustomEvent("transition-enter");
-    document.dispatchEvent(event);
-
-    this.transitionableTargets.forEach(transitionable => transitionable.classList.remove("hidden"));
-
-    await Promise.all(this.transitionableTargets.map(transitionable => enter(transitionable)));
+    this.element.dispatchEvent(new CustomEvent(`transition-${transition.name}-end`));
   }
 }

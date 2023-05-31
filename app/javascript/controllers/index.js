@@ -4,14 +4,8 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
-
 import ToggleHiddenController from "./toggle_hidden_controller"
 application.register("toggle-hidden", ToggleHiddenController)
-
-import SidebarAnimationController from "./sidebar_animation_controller"
-application.register("sidebar-animation", SidebarAnimationController)
 
 import TransitionController from "./transition_controller"
 application.register("transition", TransitionController)

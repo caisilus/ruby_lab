@@ -1,8 +1,8 @@
 <% content_for :sidebar do %>
   <!-- This example requires Tailwind CSS v2.0+ -->
   <div data-controller="transition toggle-hidden"
-       data-action="transition-enter@document->toggle-hidden#toggleHidden
-                    transition-left@document->toggle-hidden#toggleHidden">
+       data-action="transition-enter-start->toggle-hidden#toggleHidden
+                    transition-leave-end->toggle-hidden#toggleHidden">
     <!-- Mobile button for sidebar -->
     <div class="fixed top-3 left-2 z-10 flex items-center sm:hidden">
       <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
@@ -17,7 +17,7 @@
       </button>
     </div>
     <aside class="hidden sm:block fixed top-0 py-16 z-20 w-64 overflow-y-auto"
-           data-toggle-hidden-target="itemToToggle">
+           data-toggle-hidden-target="toggleable">
 
       <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
       <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
