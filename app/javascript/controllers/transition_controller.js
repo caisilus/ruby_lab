@@ -20,10 +20,10 @@ export default class extends Controller {
   }
 
   async transitionAll(transition) {
-    this.element.dispatchEvent(new CustomEvent(`transition-${transition.name}-start`));
+    this.dispatch(`${transition.name}-start`);
 
     await Promise.all(this.transitionableTargets.map(transitionable => transition(transitionable)));
 
-    this.element.dispatchEvent(new CustomEvent(`transition-${transition.name}-end`));
+    this.dispatch(`${transition.name}-end`);
   }
 }
