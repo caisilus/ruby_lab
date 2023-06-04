@@ -6,7 +6,7 @@
   <div class="flex flex-col">
     <div class="self-center text-xl font-semibold text-gray-700 my-2">Задания</div>
     <% @tasks.each do |task| %>
-      <%= render partial: 'task/default', locals: {task: task} %>
+      <%= render partial: "task/#{task.partial_filename}", locals: {task: task} %>
     <% end %>
   </div>
 </turbo-frame>
