@@ -5,19 +5,10 @@
   </div>
 
   <% unless error_messages.empty? %>
-    <div class="mt-5 p-3 pl-5 border border-red-600 rounded-md bg-red-100 sm:mx-auto sm:w-full sm:max-w-sm">
-      <ul>
-        <% error_messages.each do |error_message| %>
-           <li><%= error_message %></li>
-        <% end %>
-      </ul>
-    </div>
-    <% provide :form_mt, "mt-0.5" %>
-  <% else %>
-    <% provide :form_mt, "mt-7" %>
+    <%= render partial: "shared/error_messages", locals: { error_messages: error_messages } %>
   <% end %>
 
-  <div class="<%= yield(:form_mt) %> sm:mx-auto sm:w-full sm:max-w-sm">
+  <div class="<%= error_messages.empty? ? "mt-7" : "mt-0.5" %> sm:mx-auto sm:w-full sm:max-w-sm">
     <%= form_with url: users_path, method: :post, class: "space-y-6" do |form| %>
       <%= render partial: "users/input_field", locals: {label_text: "Фамилия", input_name: "surname", required: true} %>
 
