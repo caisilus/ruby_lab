@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_24_104840) do
+ActiveRecord::Schema[7.1].define(version: 2023_06_04_141958) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,20 +52,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_104840) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "labs", force: :cascade do |t|
     t.string "title", null: false
     t.boolean "opened", default: false, null: false
     t.string "content_path", null: false
-    t.bigint "group_id"
+    t.bigint "unit_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_labs_on_group_id"
+    t.index ["unit_id"], name: "index_labs_on_unit_id"
   end
 
   create_table "task_results", force: :cascade do |t|
@@ -88,6 +82,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_24_104840) do
     t.integer "index_number"
     t.bigint "lab_id", null: false
     t.index ["lab_id"], name: "index_tasks_on_lab_id"
+  end
+
+  create_table "units", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

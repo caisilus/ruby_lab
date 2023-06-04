@@ -1,5 +1,5 @@
 class CourseController < ApplicationController
   def index
-    @groups = Group.all
+    @units = Unit.all
   end
 end

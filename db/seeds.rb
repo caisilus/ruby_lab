@@ -6,17 +6,17 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-unless Group.any?
-  Group.create(name: "Основы ruby")
-  Group.create(name: "Ruby on Rails")
+unless Unit.any?
+  Unit.create(name: "Основы ruby")
+  Unit.create(name: "Ruby on Rails")
 end
 
 unless Lab.any?
-  group = Group.find_by(name: "Основы ruby")
-  group.labs.create(title: "Лабораторная работа №1", content_path: "lab1")
-  group.labs.create(title: "Лабораторная работа №2", group: group, content_path: "lab2")
-  group = Group.find_by(name: "Ruby on Rails")
-  group.labs.create(title: "Лабораторная работа №3", group: group, content_path: "lab3")
+  unit = Unit.find_by(name: "Основы ruby")
+  unit.labs.create(title: "Лабораторная работа №1", content_path: "lab1")
+  unit.labs.create(title: "Лабораторная работа №2", unit: unit, content_path: "lab2")
+  unit = Unit.find_by(name: "Ruby on Rails")
+  unit.labs.create(title: "Лабораторная работа №3", unit: unit, content_path: "lab3")
 end
 
 unless Task.any?
