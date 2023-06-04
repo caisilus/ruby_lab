@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def new
-    render :new, locals: { error_messages: ["AAAAAAAAAA"] }
+    registration_form
   end
 
   def create
@@ -11,11 +11,11 @@ class UsersController < ApplicationController
 
     success = subscribe_to_repo(link)
 
-    return render :new, locals: { error_messages: ["Incorrect link to repo!"] } unless success
+    return form_with_errors(["Некорректная ссылка на репозиторий."]) unless success
 
     user.repo_link = link.gsub("https://github.com/", "")
 
-    return render :new, locals: { error_messages: user.errors.full_messages }  unless user.save
+    return form_with_errors(user.errors.full_messages) unless user.save
 
     session[:current_user_id] = user.id
 
@@ -23,6 +23,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def registration_form
+    form_with_errors([])
+  end
+
+  def form_with_errors(error_messages)
+    render :new, status: :unprocessable_entity, locals: { error_messages: error_messages }
+  end
 
   def parse_params
     params.permit(:surname, :name, :middle_name, :repo_link)
