@@ -1,18 +1,13 @@
 <% content_for :sidebar do %>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div data-controller="sidebar-animation"
-       data-sidebar-animation-canvas-start-value="opacity-0"
-       data-sidebar-animation-canvas-end-value="opacity-100"
-       data-sidebar-animation-canvas-menu-start-value="-translate-x-full"
-       data-sidebar-animation-canvas-menu-end-value="translate-x-0"
-       data-sidebar-animation-close-button-start-value="opacity-0"
-       data-sidebar-animation-close-button-end-value="opacity-100"
-       data-sidebar-animation-duration-value="300">
+  <div data-controller="transition toggle-hidden"
+       data-action="transition:enter-start->toggle-hidden#toggleHidden
+                    transition:leave-end->toggle-hidden#toggleHidden">
     <!-- Mobile button for sidebar -->
     <div class="fixed top-3 left-2 z-10 flex items-center sm:hidden">
       <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               aria-controls="mobile-menu" aria-expanded="false"
-              data-action="sidebar-animation#startAnimation">
+              data-action="transition#toggleTransition">
         <span class="sr-only">Open sidebar</span>
         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
              stroke="currentColor" aria-hidden="true">
@@ -22,7 +17,7 @@
       </button>
     </div>
     <aside class="hidden sm:block fixed top-0 py-16 z-20 w-64 overflow-y-auto"
-           data-sidebar-animation-target="sidebarMenu">
+           data-toggle-hidden-target="toggleable">
 
       <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
       <div class="fixed inset-0 flex z-40 md:hidden" role="dialog" aria-modal="true">
@@ -38,7 +33,14 @@
         -->
         <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity ease-linear duration-300 opacity-0"
              aria-hidden="true"
-             data-sidebar-animation-target="canvasOverlay"></div>
+             data-transition-target="transitionable"
+             data-transition-enter="transition ease-linear duration-300"
+             data-transition-enter-start="opacity-0"
+             data-transition-enter-end="opacity-100"
+             data-transition-leave="transition ease-linear duration-300"
+             data-transition-leave-start="opacity-100"
+             data-transition-leave-end="opacity-0"
+        ></div>
 
         <!--
           Off-canvas menu, show/hide based on off-canvas menu state.
@@ -51,7 +53,13 @@
             To: "-translate-x-full"
         -->
         <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white transform transition-transform ease-in-out duration-300 -translate-x-full"
-             data-sidebar-animation-target="canvasMenu">
+             data-transition-target="transitionable"
+             data-transition-enter="transition ease-in-out duration-300 transform"
+             data-transition-enter-start="-translate-x-full"
+             data-transition-enter-end="translate-x-0"
+             data-transition-leave="transition ease-in-out duration-300 transform"
+             data-transition-leave-start="translate-x-0"
+             data-transition-leave-end="-translate-x-full">
           <!--
             Close button, show/hide based on off-canvas menu state.
 
@@ -63,9 +71,15 @@
               To: "opacity-0"
           -->
           <div class="absolute top-0 right-0 -mr-12 pt-2 transition-opacity ease-in-out duration-500 opacity-0"
-               data-sidebar-animation-target="closeButton">
+               data-transition-target="transitionable"
+               data-transition-enter="ease-in-out duration-300"
+               data-transition-enter-start="opacity-0"
+               data-transition-enter-end="opacity-100"
+               data-transition-leave="ease-in-out duration-300"
+               data-transition-leave-start="opacity-100"
+               data-transition-leave-end="opacity-0">
             <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                    data-action="sidebar-animation#startAnimation">
+                    data-action="transition#toggleTransition">
               <span class="sr-only">Close sidebar</span>
               <!-- Heroicon name: outline/x -->
               <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
