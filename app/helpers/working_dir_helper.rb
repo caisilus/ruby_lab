@@ -10,16 +10,28 @@ module WorkingDirHelper
     end
   end
 
+  def copy_test_file(test_filename, destination_dir)
+    source_test_filename = File.join(tests_dir, test_filename)
+
+    destination_test_filename = destination_test_filename(destination_dir, test_filename)
+
+    FileUtils.cp source_test_filename, destination_test_filename
+
+    destination_test_filename
+  end
+
+  private
+
   def get_dir_contents_list(repo, dir_path)
     content_entries = Octokit.contents(repo, options = { path: dir_path })
 
     # if dir_path is actually a file path, Octokit returns file content instead of content json
     return [content_entries] unless content_entries.is_a?(Array)
 
-    get_file_contents_for_content_entries(content_entries)
+    get_file_contents_for_content_entries(repo, content_entries)
   end
 
-  def get_file_contents_for_content_entries(content_entries)
+  def get_file_contents_for_content_entries(repo, content_entries)
     contents = []
     content_entries.each do |content_data|
       next unless content_data.key?(:type) && content_data[:type] == "file"
@@ -39,16 +51,6 @@ module WorkingDirHelper
 
   def tests_dir
     File.join(ENV["SANDBOX_DIRECTORY"], "tests")
-  end
-
-  def copy_test_file(test_filename, destination_dir)
-    source_test_filename = File.join(tests_dir, test_filename)
-
-    destination_test_filename = destination_test_filename(destination_dir, test_filename)
-
-    FileUtils.cp source_test_filename, destination_test_filename
-
-    destination_test_filename
   end
 
   def destination_test_filename(destination_dir, test_filename)
