@@ -45,9 +45,6 @@ RUN yarn install --frozen-lockfile
 # Copy application code
 COPY --link . .
 
-# Remove lab contents used in development
-RUN rm -r app/views/lab_content
-
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 

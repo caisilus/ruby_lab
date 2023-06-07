@@ -33,7 +33,6 @@ env:
 # Volumes for app container
 volumes:
   - "~/ruby_lab_app/sandbox:/rails/sandbox"
-  - "~/ruby_lab_app/lab_content:/rails/app/views/lab_content"
 
 # Use accessory services (secrets come from .env).
 accessories:
