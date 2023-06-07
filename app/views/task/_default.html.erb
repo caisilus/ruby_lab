@@ -1,29 +1,31 @@
-<div class="text-xl font-semibold text-gray-600">
-  <%= task.title %>
+<div class="border-b-4 pb-4 mb-5">
+  <div class="text-xl font-semibold text-gray-600">
+    <%= task.title %>
+  </div>
+  <div class="text-lg border-b-2 pb-3 border-dashed">
+    <%= yield("task#{task.index_number}".to_sym) %>
+  </div>
+
+  <% if Current.user.nil? %>
+    <h2 class="text-xl">Результат:</h2>
+    <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+      <dd class="mt-1 text-2xl font-semibold text-red-600">
+        <%= "Для отображения результатов необходимо войти в аккаунт"%>
+      </dd>
+    </div>
+  <% else %>
+    <%= turbo_stream_from last_result_dom_id(task, Current.user) %>
+    <h2 class="text-xl">Результат:</h2>
+    <div id="<%= last_result_dom_id(task, Current.user) %>">
+      <% if task.has_results_for_user?(Current.user) %>
+        <%= render task.last_result_for_user(Current.user) %>
+      <% else %>
+        <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
+          <dd class="mt-1 text-2xl font-semibold text-red-600">
+            <%= "Не начато"%>
+          </dd>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-<p>
-  <%= task.text %>
-</p>
-
-
-<% if Current.user.nil? %>
-  <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-    <dd class="mt-1 text-2xl font-semibold text-red-600">
-      <%= "Для отображения результатов необходимо войти в аккаунт"%>
-    </dd>
-  </div>
-<% else %>
-  <%= turbo_stream_from last_result_dom_id(task, Current.user) %>
-
-  <div id="<%= last_result_dom_id(task, Current.user) %>">
-    <% if task.has_results_for_user?(Current.user) %>
-      <%= render task.last_result_for_user(Current.user) %>
-    <% else %>
-      <div class="px-4 my-3 mb-5 py-5 bg-white shadow rounded-lg overflow-hidden sm:p-6">
-        <dd class="mt-1 text-2xl font-semibold text-red-600">
-          <%= "Не начато"%>
-        </dd>
-      </div>
-    <% end %>
-  </div>
-<% end %>
