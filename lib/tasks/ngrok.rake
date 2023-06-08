@@ -4,10 +4,8 @@ namespace :ngrok do
   desc "Launches ngrok, then fills env variable DEV_URL and starts rails server"
   task start: :environment do
     Open3.popen2e("ngrok http 3000 --config lib/tasks/ngrok.yml") do |stdin, stdout, status, thread|
-      line = stdout.gets
-      while line do
+      while line = stdout.gets do
         args = line.split(" ")
-        line = stdout.gets
 
         url_arg = args.find {|arg| arg.start_with? "url"}
 
