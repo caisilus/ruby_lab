@@ -134,6 +134,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
     ffi (1.15.5)
+    foreman (0.87.2)
     globalid (1.1.0)
       activesupport (>= 5.0)
     i18n (1.13.0)
@@ -292,6 +293,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   dotenv-rails (~> 2.7)
+  foreman (~> 0.87.2)
   image_processing (~> 1.2)
   jbuilder
   jsbundling-rails

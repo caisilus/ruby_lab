@@ -81,3 +81,5 @@ gem "octokit", "~> 4.22"
 gem "minitest-reporters-json_reporter", "~> 0.1.1"
 
 gem "mrsk", "~> 0.12.1"
+
+gem "foreman", "~> 0.87.2", :group => :development
