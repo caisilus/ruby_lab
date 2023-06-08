@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  validates :index_number, :title, :content_path, :test_filename, presence: true
+  validates :index_number, :title, :partial_filename, :test_filename, presence: true
   has_rich_text :text
   belongs_to :lab
   has_many :task_results

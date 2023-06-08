@@ -6,17 +6,9 @@ class PayloadController < ApplicationController
 
     return if parsed_params.nil?
 
-    username = parsed_params["repository"]["owner"]["login"].to_s
-    user = User.find_by(github_login: username)
-    repo = parsed_params["repository"]["full_name"].to_s
+    user = get_user_from_push_params(parsed_params)
 
-    if repo != user.repo_link
-      puts "#{repo} != #{user.repo_link}"
-      return
-    end
-
-    files_set = committed_files_set parsed_params["commits"]
-    tasks = tasks_list(files_set)
+    tasks = committed_tasks(parsed_params["commits"])
     tasks.each do |task|
       RunTestsJob.perform_later(user, task)
     end
@@ -34,6 +26,26 @@ class PayloadController < ApplicationController
     json
   end
 
+  def get_user_from_push_params(parsed_params)
+    username = parsed_params["repository"]["owner"]["login"].to_s
+    user = User.find_by(github_login: username)
+
+    repo = parsed_params["repository"]["full_name"].to_s
+
+    if repo != user.repo_link
+      puts "#{repo} != #{user.repo_link}"
+      return nil
+    end
+
+    user
+  end
+
+  def committed_tasks(commits)
+    files_set = committed_files_set(commits)
+
+    files_set.map { |filename| get_task_by_filename(filename) }
+  end
+
   def committed_files_set(commits)
     files_set = Set.new
     commits.each do |commit|
@@ -43,24 +55,14 @@ class PayloadController < ApplicationController
     files_set
   end
 
-  def tasks_list(files_set)
-    tasks_list = []
-
-    files_set.each do |full_path|
-      task = get_task_by_filename(full_path)
-      tasks_list << task
-    end
-
-    tasks_list
-  end
-
+  # lab{n}/task{m}/filename => Task number m in Lab number n should be tested
   def get_task_by_filename(file_path)
     tokens = file_path.split("/")
 
     raise "must be at least 3 tokens in path" if tokens.length != 3
 
     lab_id = tokens.first.gsub("lab", "").to_i
-    task_index = tokens[1].gsub("task", "").to_i
+    task_index = tokens.second.gsub("task", "").to_i
 
     Lab.find(lab_id).tasks.find_by(index_number: task_index)
   end
