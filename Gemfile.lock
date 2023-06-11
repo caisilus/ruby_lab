@@ -133,6 +133,8 @@ GEM
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
+    faraday-retry (2.2.0)
+      faraday (~> 2.0)
     ffi (1.15.5)
     foreman (0.87.2)
     globalid (1.1.0)
@@ -293,6 +295,7 @@ DEPENDENCIES
   cssbundling-rails
   debug
   dotenv-rails (~> 2.7)
+  faraday-retry (~> 2.2)
   foreman (~> 0.87.2)
   image_processing (~> 1.2)
   jbuilder
